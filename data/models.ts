@@ -745,6 +745,298 @@ export const compatibilityData: CompatibilityGroup[] = [
   },
 
   // ——————————————————————————————————————————————————————————————————
+  // Requested brand coverage — early models through latest shared bins
+  // ——————————————————————————————————————————————————————————————————
+  {
+    id: 600,
+    brand: "Apple",
+    models: ["iPhone", "iPhone 3G", "iPhone 3GS"],
+    glassSize:
+      '3.5" · first iPhone curved-glass era · legacy service stock only',
+    glassSizeMm:
+      "၃.၅ လက်မ · ပထမ iPhone / 3G / 3GS ခေတ် · လက်ကျန် service stock သာ များ",
+  },
+  {
+    id: 601,
+    brand: "Apple",
+    models: ["iPhone 4", "iPhone 4S"],
+    glassSize:
+      '3.5" · flat glass sandwich · iPhone 4 / 4S shared front template',
+    glassSizeMm:
+      "၃.၅ လက်မ · iPhone 4 / 4S ဖလက်မှန် · တူညီ front tempered template",
+  },
+  {
+    id: 602,
+    brand: "Apple",
+    models: ["iPhone 5", "iPhone 5c", "iPhone 5s", "iPhone SE (2016)", "iPhone SE 1"],
+    glassSize:
+      '4.0" · compact Touch ID era · 5/5s/SE shared; 5c frame lip verify',
+    glassSizeMm:
+      "၄.၀ လက်မ · compact Touch ID ခေတ် · 5 / 5s / SE တူညီ နိုင်၊ 5c ဘောင်စစ်ပါ",
+  },
+  {
+    id: 603,
+    brand: "Apple",
+    models: ["iPhone 6", "iPhone 6s"],
+    glassSize:
+      '4.7" · rounded-edge Touch ID · pre-7 speaker/camera sensor layout',
+    glassSizeMm:
+      "၄.၇ လက်မ · iPhone 6 / 6s ပတ်ဘောင်ကွေး · 7/8/SE2 SKU နှင့် မရောပါနှင့်",
+  },
+  {
+    id: 604,
+    brand: "Apple",
+    models: ["iPhone 6 Plus", "iPhone 6s Plus"],
+    glassSize:
+      '5.5" · rounded-edge Plus · legacy large Touch ID mold',
+    glassSizeMm:
+      "၅.၅ လက်မ · iPhone 6 Plus / 6s Plus · Touch ID Plus လက်ကျန် mold",
+  },
+  {
+    id: 605,
+    brand: "Samsung",
+    models: ["Galaxy S", "Galaxy S II", "Galaxy S III", "Galaxy S4", "Galaxy S5"],
+    glassSize:
+      '4.0–5.1" · early Galaxy S legacy clearance · generation-specific molds',
+    glassSizeMm:
+      "၄.၀–၅.၁ လက်မ · Galaxy S အစောပိုင်း မျိုးဆက်များ · မျိုးဆက်အလိုက် SKU ခွဲပါ",
+  },
+  {
+    id: 606,
+    brand: "Samsung",
+    models: ["Galaxy S6", "Galaxy S6 edge", "Galaxy S7", "Galaxy S7 edge"],
+    glassSize:
+      '5.1" / 5.5" · glass-back Galaxy era · edge variants need curved film/glass',
+    glassSizeMm:
+      "၅.၁ / ၅.၅ လက်မ · Galaxy S6/S7 ခေတ် · edge မော်ဒယ်များ ကွေးမှန် SKU သီးခြား",
+  },
+  {
+    id: 607,
+    brand: "Samsung",
+    models: ["Galaxy S8", "Galaxy S8+", "Galaxy S9", "Galaxy S9+"],
+    glassSize:
+      '5.8" / 6.2" · Infinity Display curved flagship · S8/S9 speaker slit verify',
+    glassSizeMm:
+      "၅.၈ / ၆.၂ လက်မ · Infinity Display ကွေးမှန် · S8/S9 speaker ပေါက်စစ်ပါ",
+  },
+  {
+    id: 608,
+    brand: "Samsung",
+    models: ["Galaxy Note", "Galaxy Note II", "Galaxy Note 3", "Galaxy Note 4", "Galaxy Note 5"],
+    glassSize:
+      '5.3–5.7" · early Note / S Pen legacy line · each generation printed separately',
+    glassSizeMm:
+      "၅.၃–၅.၇ လက်မ · Note အစောပိုင်း S Pen လိုင်း · မျိုးဆက်အလိုက် လက်ကားခွဲပါ",
+  },
+  {
+    id: 609,
+    brand: "Huawei",
+    models: ["Huawei Ascend P6", "Huawei Ascend P7", "Huawei P8", "Huawei P8 Lite"],
+    glassSize:
+      '4.7–5.2" · Ascend/P early slim era · Lite and flagship not always interchangeable',
+    glassSizeMm:
+      "၄.၇–၅.၂ လက်မ · Huawei Ascend/P အစောပိုင်း · Lite နှင့် flagship မရောပါနှင့်",
+  },
+  {
+    id: 610,
+    brand: "Huawei",
+    models: ["Huawei P9", "Huawei P9 Lite", "Huawei P10", "Huawei P10 Lite", "Huawei P20", "Huawei P20 Pro", "Huawei P20 Lite"],
+    glassSize:
+      '5.1–6.1" · Leica / notch transition · P20 Lite notch differs from P10 family',
+    glassSizeMm:
+      "၅.၁–၆.၁ လက်မ · Leica မှ notch ခေတ်ပြောင်း · P20 Lite notch SKU သီးခြား",
+  },
+  {
+    id: 611,
+    brand: "Huawei",
+    models: ["Huawei Y3", "Huawei Y5", "Huawei Y6", "Huawei Y7", "Huawei Y9", "Huawei P Smart", "Huawei P Smart 2019"],
+    glassSize:
+      '5.0–6.5" · Huawei Y / P Smart budget rack · year label must match packaging',
+    glassSizeMm:
+      "၅.၀–၆.၅ လက်မ · Huawei Y / P Smart budget လိုင်း · ခုနှစ်ပါတဲ့ label ကိုက်အောင်ရွေးပါ",
+  },
+  {
+    id: 612,
+    brand: "Tecno",
+    models: ["Tecno Spark", "Tecno Spark 2", "Tecno Spark 3", "Tecno Spark 4", "Tecno Spark 5", "Tecno Spark 6", "Tecno Spark 7", "Tecno Spark 8"],
+    glassSize:
+      '5.5–6.8" · Spark early-to-mid budget family · V-notch and punch bins split',
+    glassSizeMm:
+      "၅.၅–၆.၈ လက်မ · Spark အစောပိုင်းမှ အလယ်လိုင်း · V-notch / punch SKU ခွဲပါ",
+  },
+  {
+    id: 613,
+    brand: "Tecno",
+    models: ["Tecno Camon C8", "Tecno Camon C9", "Tecno Camon CX", "Tecno Camon 11", "Tecno Camon 12", "Tecno Camon 15", "Tecno Camon 16", "Tecno Camon 17", "Tecno Camon 18"],
+    glassSize:
+      '5.5–6.8" · Camon camera-series legacy rack · confirm notch/punch generation',
+    glassSizeMm:
+      "၅.၅–၆.၈ လက်မ · Camon ကင်မရာစီးရီး လက်ကျန် rack · notch/punch မျိုးဆက်စစ်ပါ",
+  },
+  {
+    id: 614,
+    brand: "Tecno",
+    models: ["Tecno Camon 40", "Tecno Camon 40 Pro", "Tecno Camon 40 Premier", "Tecno Pova Slim", "Tecno Spark Slim", "Tecno Spark 40 Pro+", "Tecno Spark 40 5G"],
+    glassSize:
+      '6.67–6.78" · latest Tecno 2025/2026 slim and Camon wave · AMOLED curve vs flat split',
+    glassSizeMm:
+      "၆.၆၇–၆.၇၈ လက်မ · Tecno နောက်ဆုံးထွက် Camon/Spark/Slim လိုင်း · ဖလက်/ကွေး SKU ခွဲပါ",
+  },
+  {
+    id: 615,
+    brand: "Infinix",
+    models: ["Infinix Hot", "Infinix Hot 2", "Infinix Hot 3", "Infinix Hot 4", "Infinix Hot 5", "Infinix Hot 6", "Infinix Hot 7", "Infinix Hot 8", "Infinix Hot 9"],
+    glassSize:
+      '5.0–6.6" · Infinix Hot legacy budget line · early models use separate compact molds',
+    glassSizeMm:
+      "၅.၀–၆.၆ လက်မ · Infinix Hot အစောပိုင်း budget လိုင်း · compact mold များ သီးခြား",
+  },
+  {
+    id: 616,
+    brand: "Infinix",
+    models: ["Infinix Note 3", "Infinix Note 4", "Infinix Note 5", "Infinix Note 6", "Infinix Note 7", "Infinix Note 8", "Infinix Note 10"],
+    glassSize:
+      '6.0–6.95" · Infinix Note large-screen legacy line · Pro trims are taller/wider',
+    glassSizeMm:
+      "၆.၀–၆.၉၅ လက်မ · Infinix Note မျက်နှာပြင်ကြီး လိုင်း · Pro trim အရွယ်ကွဲနိုင်",
+  },
+  {
+    id: 617,
+    brand: "Infinix",
+    models: ["Infinix Hot 50", "Infinix Hot 50 Pro", "Infinix Hot 50 Pro+", "Infinix Hot 60", "Infinix Hot 60 Pro", "Infinix Hot 60 Pro+", "Infinix GT 30 Pro", "Infinix Smart 10", "Infinix Smart 10 Plus"],
+    glassSize:
+      '6.67–6.78" · latest Infinix Hot/GT/Smart wave · punch-hole flat vs curved Pro+ verify',
+    glassSizeMm:
+      "၆.၆၇–၆.၇၈ လက်မ · Infinix နောက်ဆုံးထွက် Hot/GT/Smart လိုင်း · Pro+ ကွေးမှန် SKU စစ်ပါ",
+  },
+  {
+    id: 618,
+    brand: "LG",
+    models: ["LG Optimus G", "LG G2", "LG G3", "LG G4", "LG G5", "LG G6", "LG G7 ThinQ", "LG G8 ThinQ"],
+    glassSize:
+      '4.7–6.1" · LG G-series legacy flagship clearance · generation-specific stock',
+    glassSizeMm:
+      "၄.၇–၆.၁ လက်မ · LG G စီးရီး လက်ကျန် stock · မျိုးဆက်အလိုက် SKU ခွဲပါ",
+  },
+  {
+    id: 619,
+    brand: "LG",
+    models: ["LG V10", "LG V20", "LG V30", "LG V35 ThinQ", "LG V40 ThinQ", "LG V50 ThinQ"],
+    glassSize:
+      '5.7–6.4" · LG V-series media flagship · secondary-screen V10/V20 bins differ',
+    glassSizeMm:
+      "၅.၇–၆.၄ လက်မ · LG V စီးရီး · V10/V20 secondary screen ပေါက်ကွဲပြား",
+  },
+  {
+    id: 620,
+    brand: "Lenovo",
+    models: ["Lenovo A6000", "Lenovo A7000", "Lenovo K3 Note", "Lenovo K4 Note", "Lenovo K5 Note", "Lenovo K6 Note", "Lenovo K8 Note", "Lenovo K10 Note"],
+    glassSize:
+      '5.0–6.3" · Lenovo A/K Note legacy rack · India/China variants verify',
+    glassSizeMm:
+      "၅.၀–၆.၃ လက်မ · Lenovo A/K Note လက်ကျန် rack · India/China variant စစ်ပါ",
+  },
+  {
+    id: 621,
+    brand: "Nothing",
+    models: ["Nothing Phone (3a)", "Nothing Phone (3a) Pro", "Nothing CMF Phone 1", "Nothing CMF Phone 2 Pro"],
+    glassSize:
+      '6.67–6.77" · Nothing/CMF mid-range flat slabs · Glyph vs CMF camera shelf separate',
+    glassSizeMm:
+      "၆.၆၇–၆.၇၇ လက်မ · Nothing / CMF mid-range ဖလက် · Glyph နှင့် CMF ကင်မရာ shelf မတူနိုင်",
+  },
+  {
+    id: 622,
+    brand: "Redmi",
+    models: ["Redmi 1", "Redmi 1S", "Redmi 2", "Redmi 2 Prime", "Redmi 3", "Redmi 3S", "Redmi 4", "Redmi 4A", "Redmi 5", "Redmi 5 Plus"],
+    glassSize:
+      '4.7–5.99" · early Redmi digit-series · compact budget molds by generation',
+    glassSizeMm:
+      "၄.၇–၅.၉၉ လက်မ · Redmi အစောပိုင်း digit စီးရီး · မျိုးဆက်အလိုက် compact SKU",
+  },
+  {
+    id: 623,
+    brand: "Xiaomi",
+    models: ["Mi 1", "Mi 2", "Mi 3", "Mi 4", "Mi 4i", "Mi 5", "Mi 5s", "Mi 6"],
+    glassSize:
+      '4.0–5.15" · Xiaomi Mi early flagship line · old-service specialty stock',
+    glassSizeMm:
+      "၄.၀–၅.၁၅ လက်မ · Xiaomi Mi အစောပိုင်း flagship · service stock သီးခြား",
+  },
+  {
+    id: 624,
+    brand: "Xiaomi",
+    models: ["Mi 8", "Mi 8 Lite", "Mi 9", "Mi 9 Lite", "Mi 9T", "Mi 9T Pro", "Mi 10", "Mi 10 Pro", "Mi 11", "Mi 11 Lite"],
+    glassSize:
+      '6.21–6.81" · Mi notch-to-punch transition · Lite/T/Pro molds do not fully interchange',
+    glassSizeMm:
+      "၆.၂၁–၆.၈၁ လက်မ · Mi notch မှ punch ခေတ်ပြောင်း · Lite/T/Pro SKU ခွဲပါ",
+  },
+  {
+    id: 625,
+    brand: "Motorola",
+    models: ["Moto G", "Moto G2", "Moto G3", "Moto G4", "Moto G4 Plus", "Moto G5", "Moto G5 Plus", "Moto G6", "Moto G6 Plus", "Moto G7", "Moto G7 Power"],
+    glassSize:
+      '4.5–6.2" · Moto G legacy retail rack · Plus/Power variants taller',
+    glassSizeMm:
+      "၄.၅–၆.၂ လက်မ · Moto G အစောပိုင်းမှ G7 လိုင်း · Plus/Power အရွယ်ကွဲနိုင်",
+  },
+  {
+    id: 626,
+    brand: "OnePlus",
+    models: ["OnePlus One", "OnePlus 2", "OnePlus X", "OnePlus 3", "OnePlus 3T", "OnePlus 5", "OnePlus 5T"],
+    glassSize:
+      '5.0–6.01" · OnePlus early flagship line · 5T tall 18:9 bin separate',
+    glassSizeMm:
+      "၅.၀–၆.၀၁ လက်မ · OnePlus အစောပိုင်း flagship · 5T 18:9 SKU သီးခြား",
+  },
+  {
+    id: 627,
+    brand: "OnePlus",
+    models: ["OnePlus 6", "OnePlus 6T", "OnePlus 7", "OnePlus 7 Pro", "OnePlus 7T", "OnePlus 7T Pro", "OnePlus 8", "OnePlus 8 Pro", "OnePlus 9", "OnePlus 9 Pro"],
+    glassSize:
+      '6.28–6.78" · notch/pop-up/punch OnePlus era · Pro curved molds split',
+    glassSizeMm:
+      "၆.၂၈–၆.၇၈ လက်မ · OnePlus notch/pop-up/punch ခေတ် · Pro ကွေးမှန် ခွဲပါ",
+  },
+  {
+    id: 628,
+    brand: "Vivo",
+    models: ["Vivo V3", "Vivo V5", "Vivo V7", "Vivo V7+", "Vivo V9", "Vivo V11", "Vivo V15", "Vivo V15 Pro", "Vivo V17", "Vivo V19", "Vivo V20"],
+    glassSize:
+      '5.0–6.53" · Vivo V selfie-era legacy rack · pop-up and notch bins split',
+    glassSizeMm:
+      "၅.၀–၆.၅၃ လက်မ · Vivo V selfie ခေတ် · pop-up နှင့် notch SKU ခွဲပါ",
+  },
+  {
+    id: 629,
+    brand: "Oppo",
+    models: ["Oppo F1", "Oppo F1s", "Oppo F3", "Oppo F3 Plus", "Oppo F5", "Oppo F7", "Oppo F9", "Oppo F11", "Oppo F11 Pro", "Oppo F15", "Oppo F17", "Oppo F19"],
+    glassSize:
+      '5.0–6.53" · Oppo F selfie / pop-up legacy line · Pro pop-up slot verify',
+    glassSizeMm:
+      "၅.၀–၆.၅၃ လက်မ · Oppo F selfie/pop-up လိုင်း · Pro pop-up ပေါက်စစ်ပါ",
+  },
+  {
+    id: 630,
+    brand: "Itel",
+    models: ["Itel A16", "Itel A23", "Itel A25", "Itel A33", "Itel A36", "Itel A44", "Itel A46", "Itel A48", "Itel A56", "Itel A58"],
+    glassSize:
+      '5.0–6.6" · Itel A-series entry legacy rack · compact/dewdrop bins split',
+    glassSizeMm:
+      "၅.၀–၆.၆ လက်မ · Itel A စီးရီး entry လက်ကျန် rack · compact/dewdrop SKU ခွဲပါ",
+  },
+  {
+    id: 631,
+    brand: "Nokia",
+    models: ["Nokia 1", "Nokia 2", "Nokia 2.1", "Nokia 3", "Nokia 3.1", "Nokia 5", "Nokia 5.1", "Nokia 6", "Nokia 6.1", "Nokia 7 Plus", "Nokia 8", "Nokia 8 Sirocco"],
+    glassSize:
+      '4.5–6.0" · HMD Nokia early Android line · Plus/Sirocco specialty molds',
+    glassSizeMm:
+      "၄.၅–၆.၀ လက်မ · HMD Nokia Android အစောပိုင်း · Plus/Sirocco SKU သီးခြား",
+  },
+
+  // ——————————————————————————————————————————————————————————————————
   // KKTech retailer SKU bins (multi-brand shared outer glass)
   // ——————————————————————————————————————————————————————————————————
   {
