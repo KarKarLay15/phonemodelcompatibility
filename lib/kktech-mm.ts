@@ -8,7 +8,9 @@ export type QuickBrandKey =
   | "oppo"
   | "realme"
   | "huawei"
-  | "honor";
+  | "honor"
+  | "transsion"
+  | "nothing";
 
 export const QUICK_BRAND_CHIPS: { key: QuickBrandKey; label: string }[] = [
   { key: "apple", label: "Apple" },
@@ -19,6 +21,8 @@ export const QUICK_BRAND_CHIPS: { key: QuickBrandKey; label: string }[] = [
   { key: "realme", label: "Realme" },
   { key: "huawei", label: "Huawei" },
   { key: "honor", label: "Honor" },
+  { key: "transsion", label: "Tecno · Infinix" },
+  { key: "nothing", label: "Nothing" },
 ];
 
 export function brandMatchesQuickFilter(
@@ -42,6 +46,10 @@ export function brandMatchesQuickFilter(
       return brand === "Huawei";
     case "honor":
       return brand === "Honor";
+    case "transsion":
+      return brand === "Tecno" || brand === "Infinix" || brand === "Itel";
+    case "nothing":
+      return brand === "Nothing";
   }
 }
 

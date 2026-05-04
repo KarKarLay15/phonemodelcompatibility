@@ -6,6 +6,7 @@ import {
   compatibilityData,
   type CompatibilityGroup,
 } from "@/data/models";
+import { glassSearchText } from "@/data/compatibility-i18n";
 
 export type { CompatibilityGroup };
 
@@ -37,7 +38,10 @@ export function CompatibilityChecker({ brightMode = false }: Props) {
     return compatibilityData.filter((item) => {
       if (brand !== "All" && item.brand !== brand) return false;
       if (!q) return true;
-      return item.models.some((m) => m.toLowerCase().includes(q));
+      return (
+        item.models.some((m) => m.toLowerCase().includes(q)) ||
+        glassSearchText(item).toLowerCase().includes(q)
+      );
     });
   }, [query, brand]);
 

@@ -7,6 +7,7 @@
 
 import type { CompatibilityGroup } from "./compatibility-types";
 import { extendedCompatibilityGroups } from "./models-extended";
+import { recent2026CompatibilityGroups } from "./models-recent-2026";
 
 export type { CompatibilityGroup } from "./compatibility-types";
 
@@ -175,16 +176,23 @@ export const compatibilityData: CompatibilityGroup[] = [
   {
     id: 23,
     brand: "Samsung",
-    models: ["Galaxy S22 Ultra", "Galaxy S23 Ultra", "Galaxy S24 Ultra"],
+    models: ["Galaxy S22 Ultra", "Galaxy S23 Ultra", "Galaxy S24 Ultra", "Galaxy S25 Ultra"],
     glassSize:
-      '6.8" · curved Ultra mold · S Pen curve · camera island differs by gen — verify cut',
+      '6.8" · curved Ultra mold · S Pen curve · S24 vs S25 camera housing — verify importer cut',
   },
   {
     id: 24,
     brand: "Samsung",
-    models: ["Galaxy S23", "Galaxy S23+", "Galaxy S22", "Galaxy S22+"],
+    models: [
+      "Galaxy S23",
+      "Galaxy S23+",
+      "Galaxy S22",
+      "Galaxy S22+",
+      "Galaxy S25",
+      "Galaxy S25+",
+    ],
     glassSize:
-      '6.1" / 6.6" · flat flagship contour armor — separate SKU per size tier',
+      '6.2" / 6.7" · flat flagship armor · S22/S23 vs S25 bezel revision — pick generation-printed tempered',
   },
   {
     id: 25,
@@ -735,6 +743,87 @@ export const compatibilityData: CompatibilityGroup[] = [
     glassSize:
       '6.67" · 2024 CE refresh · pastel trim same outer dimensions retail',
   },
+
+  // ——————————————————————————————————————————————————————————————————
+  // KKTech retailer SKU bins (multi-brand shared outer glass)
+  // ——————————————————————————————————————————————————————————————————
+  {
+    id: 480,
+    brand: "SH 14",
+    models: [
+      "Infinix Hot 10",
+      "Infinix Hot 11S",
+      "Infinix Hot 12",
+      "Infinix Hot 20",
+      "Infinix Hot 30",
+      "Tecno Pova",
+      "Tecno Spark 6",
+      "Tecno Camon 16",
+      "Tecno Camon 17P",
+      "Tecno Camon 18",
+      "Tecno Camon 18P",
+      "Tecno Camon 19 Neo",
+      "Tecno Pova Neo 2",
+      "Tecno Spark 10 Pro",
+      "Tecno Spark 20 Pro",
+      "Tecno Pova 6 Neo",
+      "Tecno Spark 30 4G",
+      "Redmi 13",
+      "Redmi 12",
+      "Redmi Note 13R",
+    ],
+    glassSize:
+      'SKU SH 14 · Hot / Pova / Camon / Spark cross-family + Redmi 12 · 13 · Note 13R · punch/V-notch trims vary — dry-fit',
+    glassSizeMm:
+      "SH 14 SKU · Infinix Hot / Tecno Pova-Camon-Spark နှင့် Redmi 12 · 13 · Note 13R တူညီ ကားပေါက် — notch/punch ကွဲပြား နိုင် — တပ်ဆင်မမီ စမ်းပါ",
+  },
+  {
+    id: 481,
+    brand: "SH 15",
+    models: ["Oppo F9", "Oppo F9 Pro", "Realme 5 Pro"],
+    glassSize:
+      'SKU SH 15 · classic drop-notch mid era · shared outer slab — verify earpiece/sensor slots',
+    glassSizeMm:
+      "SH 15 SKU · အော်ပို F9 ခေတ် notch ဖေါင်ကျယ် · Realme 5 Pro နှင့် တူညီ နိုင်သော ဆိုင်လူမှ တပ်ဆင် မရွေးမီ ပေါက်ချင်း စစ်ပါ",
+  },
+  {
+    id: 482,
+    brand: "Modern Series",
+    models: [
+      "Realme C55",
+      "Oppo A78",
+      "OnePlus Nord N30 SE",
+      "Oppo A1",
+      "Realme 12",
+      "Oppo A98 5G",
+      "Oppo A58 4G",
+    ],
+    glassSize:
+      'Modern-series retailer mold · BBK mid punch/capsule family · Nord N30 SE included — match printed listing',
+    glassSizeMm:
+      "Modern စီးရီး တစ်ချောင်းတည်း လက်ကား · Realme C55 / Oppo A78 / Nord N30 SE တို့ ပါဝင် — နိုင်ငံရှိ တံဆိပ်နှင့် SKU စစ်ပါ",
+  },
+  {
+    id: 483,
+    brand: "Latest 2024–2025",
+    models: [
+      "Infinix Hot 50",
+      "Infinix Hot 50 Pro",
+      "Honor X7C",
+      "Vivo Y19s",
+      "Tecno Spark 30 Pro",
+      "Itel S25",
+      "Realme C75",
+      "Oppo A3 (2024)",
+      "Oppo A3x (2024)",
+    ],
+    glassSize:
+      '2024–2025 fresh-stock bin · budget punch-hole wave · Oppo A3/A3x refresh — regional naming drift — confirm fit',
+    glassSizeMm:
+      "၂၀၂၄–၂၀၂၅ ထုတ်သစ် လက်ကား · ဘတ်ဂျက် punch-hole လိုင်း · အော်ပို A3/A3x ပြန်လည် ထုတ် — နိုင်ငံအလိုက် နာမည်ကွဲ — တပ်ဆင်မမီ စမ်းပါ",
+  },
+
+  ...recent2026CompatibilityGroups,
 
   ...extendedCompatibilityGroups,
 ];

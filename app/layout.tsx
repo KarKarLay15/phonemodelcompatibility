@@ -41,10 +41,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="my" className={`h-full ${inter.variable} ${notoSansMyanmar.variable}`}>
-      <body
-        className="min-h-dvh overflow-x-hidden overflow-y-auto bg-black font-sans antialiased"
-      >
+    <html
+      lang="my"
+      className={`h-full ${inter.variable} ${notoSansMyanmar.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-dvh overflow-x-hidden overflow-y-auto bg-transparent font-sans antialiased">
         {children}
       </body>
     </html>

@@ -2,6 +2,10 @@
 
 import { compatibilityData } from "@/data/models";
 import {
+  glassDescription,
+  glassSearchText,
+} from "@/data/compatibility-i18n";
+import {
   QUICK_BRAND_CHIPS,
   brandMatchesQuickFilter,
   chipHaptic,
@@ -10,7 +14,7 @@ import {
   type QuickBrandKey,
 } from "@/lib/kktech-mm";
 import { AnimatePresence, motion, useAnimationControls } from "framer-motion";
-import { ChevronUp, Info, Languages, Search, Smartphone } from "lucide-react";
+import { ChevronUp, Info, Languages, Moon, Search, Smartphone, Sun } from "lucide-react";
 import React, {
   useEffect,
   useLayoutEffect,
@@ -39,7 +43,7 @@ function HighlightMatch({ text, query }: { text: string; query: string }) {
         part.toLowerCase() === q.toLowerCase() ? (
           <mark
             key={`${text}-${i}`}
-            className="rounded-md bg-cyan-400/40 px-0.5 text-white [box-decoration-break:clone]"
+            className="rounded-md bg-cyan-600/25 px-0.5 text-slate-900 [box-decoration-break:clone] dark:bg-cyan-400/40 dark:text-white"
           >
             {part}
           </mark>
@@ -73,20 +77,43 @@ const springTap = {
   mass: 0.65,
 };
 
+const THEME_STORAGE_KEY = "kkt-tech-theme";
+type Theme = "light" | "dark";
+
 export default function Page() {
+  const [theme, setTheme] = useState<Theme>("dark");
   const [lang, setLang] = useState<PageLang>("mm");
   const [query, setQuery] = useState("");
   const [quickBrand, setQuickBrand] = useState<QuickBrandKey | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const [mainPaddingTop, setMainPaddingTop] = useState(220);
+  const [mainPaddingTop, setMainPaddingTop] = useState(176);
   const listSpringControls = useAnimationControls();
   const skipQueryListSpringRef = useRef(true);
   const pullTouchStartY = useRef<number | null>(null);
   const pullPeakDy = useRef(0);
 
+  useLayoutEffect(() => {
+    try {
+      const v = localStorage.getItem(THEME_STORAGE_KEY);
+      if (v === "light" || v === "dark") setTheme(v);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
+    } catch {
+      /* ignore */
+    }
+  }, [theme]);
+
   const t = useMemo(() => pageStrings(lang), [lang]);
+  const trimmedQuery = query.trim();
+  const isSearching = trimmedQuery.length > 0;
 
   const filtered = useMemo(() => {
     let rows = quickBrand
@@ -94,15 +121,15 @@ export default function Page() {
           brandMatchesQuickFilter(g.brand, quickBrand),
         )
       : compatibilityData;
-    const q = query.trim().toLowerCase();
+    const q = trimmedQuery.toLowerCase();
     if (!q) return rows;
     return rows.filter(
       (g) =>
         g.models.some((m) => m.toLowerCase().includes(q)) ||
         g.brand.toLowerCase().includes(q) ||
-        g.glassSize.toLowerCase().includes(q),
+        glassSearchText(g).toLowerCase().includes(q),
     );
-  }, [query, quickBrand]);
+  }, [quickBrand, trimmedQuery]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -116,12 +143,12 @@ export default function Page() {
     if (!el || typeof ResizeObserver === "undefined") {
       return;
     }
-    const update = () => setMainPaddingTop(el.offsetHeight + 12);
+    const update = () => setMainPaddingTop(el.offsetHeight + 8);
     const ro = new ResizeObserver(update);
     ro.observe(el);
     update();
     return () => ro.disconnect();
-  }, [lang]);
+  }, [lang, isSearching, quickBrand, theme]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -141,113 +168,181 @@ export default function Page() {
       })();
     }, 110);
     return () => window.clearTimeout(timer);
-  }, [query, listSpringControls]);
+  }, [trimmedQuery, listSpringControls]);
 
   return (
     <div
-      className="min-h-dvh bg-black pb-[max(7rem,var(--safe-bottom))] font-sans tracking-tight text-white selection:bg-cyan-500/35 md:pb-[max(2.75rem,var(--safe-bottom))]"
+      className={`${theme === "dark" ? "dark " : ""}min-h-dvh w-full bg-gray-50 pb-[max(7rem,var(--safe-bottom))] font-sans tracking-tight text-slate-900 selection:bg-cyan-600/25 md:pb-[max(2.75rem,var(--safe-bottom))] dark:bg-black dark:text-white dark:selection:bg-cyan-500/35`}
     >
       <div
-        className="pointer-events-none fixed inset-0 -z-10 opacity-35"
+        className="pointer-events-none fixed inset-0 -z-10 opacity-[0.18] dark:opacity-35"
         aria-hidden
       >
-        <div className="absolute left-1/2 top-0 h-[380px] w-[min(100%,680px)] -translate-x-1/2 rounded-full bg-cyan-600/18 blur-[110px]" />
-        <div className="absolute bottom-0 right-0 h-[260px] w-[260px] rounded-full bg-blue-700/12 blur-[95px]" />
+        <div className="absolute left-1/2 top-0 h-[380px] w-[min(100%,680px)] -translate-x-1/2 rounded-full bg-cyan-500/25 blur-[110px] dark:bg-cyan-600/18" />
+        <div className="absolute bottom-0 right-0 h-[260px] w-[260px] rounded-full bg-blue-500/15 blur-[95px] dark:bg-blue-700/12" />
       </div>
 
       <header
         ref={headerRef}
-        className={`fixed inset-x-0 top-0 z-50 pt-[max(0.65rem,env(safe-area-inset-top,0px))] transition-[background-color,box-shadow,border-color] duration-300 ease-out ${
+        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,border-color,padding-top,backdrop-filter] duration-300 ease-out ${
+          isSearching
+            ? "pt-[max(0.35rem,env(safe-area-inset-top,0px))]"
+            : "pt-[max(0.55rem,env(safe-area-inset-top,0px))]"
+        } ${
           scrolled
-            ? "border-b border-white/[0.08] bg-black/58 shadow-[0_12px_48px_rgba(0,0,0,0.55)] supports-[backdrop-filter]:bg-black/42"
-            : "border-b border-transparent bg-black/35 supports-[backdrop-filter]:bg-black/22"
+            ? "border-b border-gray-200 bg-white/95 shadow-sm supports-[backdrop-filter]:bg-white/90 dark:border-white/[0.08] dark:bg-black/58 dark:shadow-[0_12px_48px_rgba(0,0,0,0.55)] dark:supports-[backdrop-filter]:bg-black/42"
+            : "border-b border-transparent bg-white/85 supports-[backdrop-filter]:bg-white/80 dark:border-transparent dark:bg-black/35 dark:supports-[backdrop-filter]:bg-black/22"
         }`}
-        style={{
-          WebkitBackdropFilter: "blur(20px) saturate(180%)",
-          backdropFilter: "blur(20px) saturate(180%)",
-        }}
+        style={
+          theme === "dark"
+            ? {
+                WebkitBackdropFilter: "blur(20px) saturate(180%)",
+                backdropFilter: "blur(20px) saturate(180%)",
+              }
+            : { WebkitBackdropFilter: "none", backdropFilter: "none" }
+        }
       >
-        <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-4 px-4 pb-5 pt-1">
-          <motion.button
-            type="button"
-            whileTap={{ scale: 0.96, transition: springTap }}
-            onClick={() => {
-              chipHaptic();
-              setLang((prev) => (prev === "mm" ? "en" : "mm"));
-            }}
-            className="absolute end-[max(0.5rem,env(safe-area-inset-right,0px))] top-[max(0.35rem,env(safe-area-inset-top,0px))] z-[60] flex items-center gap-1.5 rounded-full border border-white/[0.14] bg-black/48 px-3 py-2 text-[11px] font-semibold tracking-tight text-zinc-100 shadow-[0_8px_28px_rgba(0,0,0,0.45)] ring-1 ring-white/[0.07]"
-            style={{
-              WebkitBackdropFilter: "blur(20px) saturate(175%)",
-              backdropFilter: "blur(20px) saturate(175%)",
-            }}
-            aria-label={
-              lang === "mm"
-                ? "Switch interface to English"
-                : "အင်တာဖေ့စ် ကို မြန်မာဘာသာသို့ ပြောင်းရန်"
-            }
-          >
-            <Languages
-              className="size-4 shrink-0 text-cyan-400"
-              strokeWidth={2}
-              aria-hidden
-            />
-            <span>{lang === "mm" ? t.langSwitchToMm : t.langSwitchToEn}</span>
-          </motion.button>
-
-          <motion.div
-            className="flex w-full flex-col items-center gap-1 pt-7 sm:flex-row sm:justify-center sm:gap-3 sm:pt-2 md:pt-0"
-            initial={false}
-            animate={{
-              scale: scrolled ? 0.96 : 1,
-              opacity: scrolled ? 0.92 : 1,
-            }}
-            transition={{ type: "spring", stiffness: 320, damping: 30 }}
-          >
-            <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 shadow-[0_0_36px_rgba(34,211,238,0.2)] ring-1 ring-white/10">
-              <Smartphone
-                className="size-7 text-white"
-                strokeWidth={1.75}
+        <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-2 px-4 pb-3 pt-0.5 sm:gap-2.5 sm:pb-4 sm:pt-1 pe-[max(7.75rem,calc(env(safe-area-inset-right,0px)+6.75rem))] ps-[max(0.75rem,env(safe-area-inset-left,0px))]">
+          <div className="absolute end-[max(0.35rem,env(safe-area-inset-right,0px))] top-[max(0.2rem,env(safe-area-inset-top,0px))] z-[60] flex flex-row-reverse items-center gap-1">
+            <motion.button
+              type="button"
+              whileTap={{ scale: 0.96, transition: springTap }}
+              onClick={() => {
+                chipHaptic();
+                setLang((prev) => (prev === "mm" ? "en" : "mm"));
+              }}
+              className="flex h-8 shrink-0 items-center gap-1 rounded-full border border-gray-200 bg-white px-2 py-1 text-[10px] font-semibold tabular-nums tracking-tight text-slate-800 shadow-sm ring-1 ring-gray-100 dark:border-white/[0.12] dark:bg-black/52 dark:text-zinc-100 dark:shadow-[0_4px_18px_rgba(0,0,0,0.45)] dark:ring-white/[0.06]"
+              style={
+                theme === "dark"
+                  ? {
+                      WebkitBackdropFilter: "blur(20px) saturate(175%)",
+                      backdropFilter: "blur(20px) saturate(175%)",
+                    }
+                  : undefined
+              }
+              aria-label={
+                lang === "mm"
+                  ? "Switch interface to English"
+                  : "အင်တာဖေ့စ် ကို မြန်မာဘာသာသို့ ပြောင်းရန်"
+              }
+            >
+              <Languages
+                className="size-3.5 shrink-0 text-cyan-600 dark:text-cyan-400"
+                strokeWidth={2}
                 aria-hidden
               />
-            </div>
-            <div className="min-h-[4.75rem] text-center sm:min-h-[5rem] sm:text-left md:min-h-0">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={lang}
-                  initial={langFade.initial}
-                  animate={langFade.animate}
-                  exit={langFade.exit}
-                  transition={langFade.transition}
-                  className="text-center sm:text-left"
+              <span className="leading-none">
+                {lang === "mm" ? t.langSwitchToMm : t.langSwitchToEn}
+              </span>
+            </motion.button>
+
+            <motion.button
+              type="button"
+              layout
+              whileTap={{ scale: 0.92, transition: springTap }}
+              onClick={() => {
+                chipHaptic();
+                setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+              }}
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-cyan-700 shadow-sm ring-1 ring-gray-100 dark:border-white/[0.12] dark:bg-black/52 dark:text-cyan-400 dark:shadow-[0_4px_18px_rgba(0,0,0,0.45)] dark:ring-white/[0.06]"
+              style={
+                theme === "dark"
+                  ? {
+                      WebkitBackdropFilter: "blur(20px) saturate(175%)",
+                      backdropFilter: "blur(20px) saturate(175%)",
+                    }
+                  : undefined
+              }
+              aria-label={
+                theme === "dark"
+                  ? "Switch to light theme"
+                  : "Switch to dark theme"
+              }
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={theme}
+                  initial={{ scale: 0.82, opacity: 0, rotate: -25 }}
+                  animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                  exit={{ scale: 0.82, opacity: 0, rotate: 25 }}
+                  transition={springIOS}
+                  className="flex items-center justify-center"
                 >
-                  <h1 className="text-balance text-xl font-semibold leading-relaxed tracking-tight text-white md:text-2xl">
-                    {t.title}
-                  </h1>
-                  <p className="mt-1 max-w-md text-pretty text-[13px] leading-relaxed text-zinc-500 md:text-sm">
-                    {t.subtitle}
-                  </p>
-                </motion.div>
+                  {theme === "dark" ? (
+                    <Sun className="size-4" strokeWidth={2} aria-hidden />
+                  ) : (
+                    <Moon className="size-4" strokeWidth={2} aria-hidden />
+                  )}
+                </motion.span>
               </AnimatePresence>
+            </motion.button>
+          </div>
+
+          <div
+            className={`grid w-full transition-[grid-template-rows] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${isSearching ? "grid-rows-[0fr]" : "grid-rows-[1fr]"}`}
+          >
+            <div className="min-h-0 overflow-hidden">
+              <motion.div
+                className="flex w-full flex-col items-center gap-1 pb-1 pt-2 sm:flex-row sm:justify-center sm:gap-2.5 sm:pb-0 sm:pt-1 md:pt-0"
+                initial={false}
+                animate={{
+                  scale: scrolled && !isSearching ? 0.97 : 1,
+                  opacity: scrolled && !isSearching ? 0.9 : 1,
+                }}
+                transition={{ type: "spring", stiffness: 380, damping: 32 }}
+              >
+                <div className="flex size-10 max-h-12 max-w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 shadow-[0_0_20px_rgba(8,145,178,0.35)] ring-1 ring-cyan-700/15 dark:shadow-[0_0_24px_rgba(34,211,238,0.18)] dark:ring-white/10 sm:size-11">
+                  <Smartphone
+                    className="size-[22px] text-white sm:size-6"
+                    strokeWidth={1.75}
+                    aria-hidden
+                  />
+                </div>
+                <div className="text-center sm:min-h-0 sm:text-left">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={lang}
+                      initial={langFade.initial}
+                      animate={langFade.animate}
+                      exit={langFade.exit}
+                      transition={langFade.transition}
+                      className="text-center sm:text-left"
+                    >
+                      <h1 className="text-balance text-base font-semibold leading-snug tracking-tight text-slate-900 sm:text-lg md:text-xl dark:text-white">
+                        {t.title}
+                      </h1>
+                      <p className="mt-0.5 max-w-md text-pretty text-[11px] leading-snug text-slate-600 sm:text-[12px] md:text-[13px] dark:text-zinc-500">
+                        {t.subtitle}
+                      </p>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              </motion.div>
             </div>
-          </motion.div>
+          </div>
 
           <motion.div
             layout
             transition={{ layout: springIOS, ...springIOS }}
             animate={{
-              scale: query.trim().length > 0 || quickBrand !== null ? 1.012 : 1,
+              scale:
+                trimmedQuery.length > 0 || quickBrand !== null ? 1.008 : 1,
             }}
             className="group relative w-full max-w-lg origin-center"
           >
             <div
-              className="relative rounded-full border-2 border-white/[0.12] bg-white/[0.06] p-[2px] shadow-[0_8px_40px_rgba(0,0,0,0.35)] transition-[border-color,box-shadow] group-focus-within:border-cyan-500/35 group-focus-within:shadow-[0_12px_48px_rgba(34,211,238,0.12)]"
-              style={{
-                WebkitBackdropFilter: "blur(20px) saturate(175%)",
-                backdropFilter: "blur(20px) saturate(175%)",
-              }}
+              className="relative rounded-full border-2 border-gray-200 bg-white p-[2px] shadow-sm transition-[border-color,box-shadow] group-focus-within:border-cyan-500/55 group-focus-within:shadow-md dark:border-white/[0.12] dark:bg-white/[0.06] dark:shadow-[0_8px_40px_rgba(0,0,0,0.35)] dark:group-focus-within:border-cyan-500/35 dark:group-focus-within:shadow-[0_12px_48px_rgba(34,211,238,0.12)]"
+              style={
+                theme === "dark"
+                  ? {
+                      WebkitBackdropFilter: "blur(20px) saturate(175%)",
+                      backdropFilter: "blur(20px) saturate(175%)",
+                    }
+                  : undefined
+              }
             >
-              <div className="pointer-events-none absolute inset-y-0 left-5 z-10 flex items-center text-zinc-500 transition-colors group-focus-within:text-cyan-400">
-                <Search className="size-5" strokeWidth={2} aria-hidden />
+              <div className="pointer-events-none absolute inset-y-0 left-4 z-10 flex items-center text-slate-500 transition-colors group-focus-within:text-cyan-600 md:left-5 dark:text-zinc-500 dark:group-focus-within:text-cyan-400">
+                <Search className="size-[18px] md:size-5" strokeWidth={2} aria-hidden />
               </div>
               <input
                 ref={searchInputRef}
@@ -256,46 +351,56 @@ export default function Page() {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={t.searchPlaceholder}
                 autoComplete="off"
-                className="w-full rounded-full border border-white/[0.06] bg-black/25 py-4 pl-14 pr-5 text-[15px] leading-relaxed tracking-tight text-white shadow-inner shadow-black/25 transition-[border-color,background-color] placeholder:text-zinc-600 focus:border-cyan-500/40 focus:bg-black/35 focus:outline-none focus:ring-2 focus:ring-cyan-500/25 md:py-[1.125rem] md:text-base"
+                className="w-full rounded-full border border-gray-200 bg-gray-100 py-2.5 pl-11 pr-4 text-[14px] leading-snug tracking-tight text-slate-900 shadow-inner shadow-slate-900/5 transition-[border-color,background-color] placeholder:text-slate-500 focus:border-cyan-500/60 focus:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 md:py-3 md:pl-14 md:pr-5 md:text-[15px] dark:border-white/[0.06] dark:bg-black/25 dark:text-white dark:shadow-inner dark:shadow-black/25 dark:placeholder:text-zinc-600 dark:focus:border-cyan-500/40 dark:focus:bg-black/35 dark:focus:ring-cyan-500/25"
                 aria-label={t.searchAria}
               />
             </div>
           </motion.div>
 
-          <div className="w-full max-w-lg space-y-2.5">
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={`qb-${lang}`}
-                initial={langFade.initial}
-                animate={langFade.animate}
-                exit={langFade.exit}
-                transition={langFade.transition}
-                className="text-center text-[11px] font-medium uppercase tracking-[0.14em] text-zinc-500"
-              >
-                {t.quickBrandsTitle}
-              </motion.p>
+          <div className="w-full max-w-lg space-y-1.5">
+            <AnimatePresence initial={false} mode="popLayout">
+              {!isSearching ? (
+                <motion.div
+                  key={`qb-label-${lang}`}
+                  layout
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                  className="overflow-hidden"
+                >
+                  <p className="text-center text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500 dark:text-zinc-500">
+                    {t.quickBrandsTitle}
+                  </p>
+                </motion.div>
+              ) : null}
             </AnimatePresence>
-            <div className="flex flex-wrap justify-center gap-2">
+            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
               {QUICK_BRAND_CHIPS.map(({ key, label }) => {
                 const active = quickBrand === key;
                 return (
                   <motion.button
                     key={key}
                     type="button"
+                    layout
                     whileTap={{ scale: 0.95, transition: springTap }}
                     onClick={() => {
                       chipHaptic();
                       setQuickBrand((prev) => (prev === key ? null : key));
                     }}
-                    className={`rounded-full border px-3.5 py-2 text-xs font-semibold tracking-tight transition-colors ${
+                    className={`rounded-full border px-2.5 py-1 text-[11px] font-semibold tracking-tight transition-colors sm:px-3 sm:py-1.5 sm:text-xs ${
                       active
-                        ? "border-cyan-500/55 bg-cyan-500/15 text-cyan-300 shadow-[0_0_20px_rgba(34,211,238,0.15)]"
-                        : "border-white/[0.1] bg-black/30 text-zinc-400 hover:border-cyan-500/25 hover:text-zinc-200"
+                        ? "border-cyan-600 bg-cyan-100 text-cyan-900 shadow-sm dark:border-cyan-500/55 dark:bg-cyan-500/15 dark:text-cyan-300 dark:shadow-[0_0_20px_rgba(34,211,238,0.15)]"
+                        : "border-gray-200 bg-white text-slate-600 shadow-sm hover:border-cyan-400/40 hover:text-slate-900 dark:border-white/[0.1] dark:bg-black/30 dark:text-zinc-400 dark:shadow-none dark:hover:border-cyan-500/25 dark:hover:text-zinc-200"
                     }`}
-                    style={{
-                      WebkitBackdropFilter: "blur(16px)",
-                      backdropFilter: "blur(16px)",
-                    }}
+                    style={
+                      theme === "dark"
+                        ? {
+                            WebkitBackdropFilter: "blur(16px)",
+                            backdropFilter: "blur(16px)",
+                          }
+                        : undefined
+                    }
                   >
                     {label}
                   </motion.button>
@@ -351,7 +456,7 @@ export default function Page() {
           initial={{ y: 0 }}
           animate={listSpringControls}
           transition={springIOS}
-          className="space-y-5 md:space-y-6"
+          className="space-y-3 md:space-y-4"
         >
           <AnimatePresence mode="popLayout" initial={false}>
             {filtered.length > 0 ? (
@@ -366,30 +471,34 @@ export default function Page() {
                     ...springIOS,
                     delay: idx * 0.032,
                   }}
-                  className="relative overflow-hidden rounded-[32px] border border-white/[0.1] bg-white/[0.045] p-6 shadow-[0_28px_72px_rgba(0,0,0,0.52)] md:p-8"
-                  style={{
-                    WebkitBackdropFilter: "blur(20px) saturate(165%)",
-                    backdropFilter: "blur(20px) saturate(165%)",
-                  }}
+                  className="relative overflow-hidden rounded-[28px] border border-gray-200 bg-white p-4 shadow-sm md:rounded-[30px] md:p-5 dark:border-white/[0.1] dark:bg-white/[0.045] dark:shadow-[0_28px_72px_rgba(0,0,0,0.52)]"
+                  style={
+                    theme === "dark"
+                      ? {
+                          WebkitBackdropFilter: "blur(20px) saturate(165%)",
+                          backdropFilter: "blur(20px) saturate(165%)",
+                        }
+                      : undefined
+                  }
                 >
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/28 to-transparent opacity-50" aria-hidden />
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/35 to-transparent opacity-70 dark:via-cyan-400/28 dark:opacity-50" aria-hidden />
 
-                  <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
+                  <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
                     <div className="flex items-center gap-2.5">
-                      <span className="size-2 shrink-0 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.55)]" />
-                      <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-cyan-300/95">
+                      <span className="size-2 shrink-0 rounded-full bg-cyan-600 shadow-[0_0_10px_rgba(8,145,178,0.45)] dark:bg-cyan-400 dark:shadow-[0_0_12px_rgba(34,211,238,0.55)]" />
+                      <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-cyan-800 dark:text-cyan-300/95">
                         {item.brand}
                       </span>
                     </div>
-                    <span className="rounded-full border border-white/[0.08] bg-black/30 px-3 py-1.5 text-[11px] font-medium leading-relaxed text-zinc-400 backdrop-blur-sm">
-                      {t.glassPrefix} · {item.glassSize}
+                    <span className="rounded-full border border-gray-200 bg-gray-50 px-2 py-1 text-[10px] font-medium leading-snug text-slate-600 md:px-2.5 md:text-[11px] dark:border-white/[0.08] dark:bg-black/30 dark:text-zinc-400">
+                      {t.glassPrefix} · {glassDescription(item, lang)}
                     </span>
                   </div>
 
                   <h2 className="sr-only">
                     {item.brand} · {t.srModelsFor}
                   </h2>
-                  <ul className="flex flex-wrap gap-2.5 md:gap-3">
+                  <ul className="flex flex-wrap gap-1.5 md:gap-2">
                     {item.models.map((model) => (
                       <li key={model}>
                         <motion.button
@@ -400,10 +509,10 @@ export default function Page() {
                             transition: springTap,
                           }}
                           onClick={() => chipHaptic()}
-                          className="flex items-center gap-2 rounded-[22px] border border-white/[0.07] bg-black/35 px-3.5 py-2.5 text-left text-sm font-medium leading-snug text-zinc-200 transition-[border-color,background-color] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/40 active:bg-black/50 md:px-4 md:py-3 md:text-[0.9375rem]"
+                          className="flex max-w-full items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 px-2 py-1.5 text-left text-[11px] font-medium leading-snug text-slate-800 transition-[border-color,background-color] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-600/35 active:bg-gray-100 sm:gap-2 sm:rounded-[18px] sm:px-2.5 sm:text-xs md:px-3 md:py-2 md:text-[13px] dark:border-white/[0.07] dark:bg-black/35 dark:text-zinc-200 dark:focus-visible:ring-cyan-500/40 dark:active:bg-black/50"
                         >
                           <Smartphone
-                            className="size-3.5 shrink-0 text-cyan-500"
+                            className="size-3 shrink-0 text-cyan-600 sm:size-3.5 dark:text-cyan-500"
                             strokeWidth={2}
                             aria-hidden
                           />
@@ -423,15 +532,19 @@ export default function Page() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.97 }}
                 transition={springIOS}
-                className="rounded-[32px] border border-dashed border-white/12 bg-white/[0.03] px-6 py-20 text-center"
-                style={{
-                  WebkitBackdropFilter: "blur(20px) saturate(165%)",
-                  backdropFilter: "blur(20px) saturate(165%)",
-                }}
+                className="rounded-[28px] border border-dashed border-gray-300 bg-white px-5 py-14 text-center shadow-sm md:rounded-[30px] md:py-16 dark:border-white/12 dark:bg-white/[0.03] dark:shadow-none"
+                style={
+                  theme === "dark"
+                    ? {
+                        WebkitBackdropFilter: "blur(20px) saturate(165%)",
+                        backdropFilter: "blur(20px) saturate(165%)",
+                      }
+                    : undefined
+                }
               >
-                <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-zinc-900/70 ring-1 ring-white/10">
+                <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-gray-100 ring-1 ring-gray-200 dark:bg-zinc-900/70 dark:ring-white/10">
                   <Smartphone
-                    className="size-7 text-zinc-600"
+                    className="size-7 text-slate-400 dark:text-zinc-600"
                     strokeWidth={1.5}
                     aria-hidden
                   />
@@ -444,11 +557,11 @@ export default function Page() {
                     exit={langFade.exit}
                     transition={langFade.transition}
                   >
-                    <p className="text-sm leading-relaxed text-zinc-500">
+                    <p className="text-sm leading-relaxed text-slate-600 dark:text-zinc-500">
                       {t.emptyNoMatch}
                     </p>
                     {query.trim().length > 0 ? (
-                      <p className="mt-3 text-xs leading-relaxed text-zinc-600">
+                      <p className="mt-3 text-xs leading-relaxed text-slate-500 dark:text-zinc-600">
                         {t.emptyQueryHint}: «{query.trim()}»
                       </p>
                     ) : null}
@@ -459,16 +572,20 @@ export default function Page() {
           </AnimatePresence>
         </motion.div>
 
-        <footer className="mt-12 md:mt-14">
+        <footer className="mt-8 md:mt-12">
           <div
-            className="mx-auto flex max-w-lg gap-3 rounded-[32px] border border-white/[0.08] bg-white/[0.04] p-5"
-            style={{
-              WebkitBackdropFilter: "blur(20px) saturate(165%)",
-              backdropFilter: "blur(20px) saturate(165%)",
-            }}
+            className="mx-auto flex max-w-lg gap-3 rounded-[32px] border border-gray-200 bg-white p-5 shadow-sm dark:border-white/[0.08] dark:bg-white/[0.04] dark:shadow-none"
+            style={
+              theme === "dark"
+                ? {
+                    WebkitBackdropFilter: "blur(20px) saturate(165%)",
+                    backdropFilter: "blur(20px) saturate(165%)",
+                  }
+                : undefined
+            }
           >
             <Info
-              className="mt-0.5 size-5 shrink-0 text-cyan-400/85"
+              className="mt-0.5 size-5 shrink-0 text-cyan-600 dark:text-cyan-400/85"
               strokeWidth={2}
               aria-hidden
             />
@@ -482,13 +599,13 @@ export default function Page() {
                   transition={langFade.transition}
                   className="flex flex-col gap-2"
                 >
-                  <p className="text-left text-[11px] leading-relaxed text-zinc-500 md:text-xs md:leading-relaxed">
+                  <p className="text-left text-[11px] leading-relaxed text-slate-600 md:text-xs md:leading-relaxed dark:text-zinc-500">
                     {t.footerExplain}{" "}
-                    <strong className="font-semibold text-cyan-500/90">
+                    <strong className="font-semibold text-cyan-700 dark:text-cyan-500/90">
                       {t.footerVerified}
                     </strong>
                   </p>
-                  <p className="text-left text-[10px] leading-relaxed text-zinc-600 md:text-[11px]">
+                  <p className="text-left text-[10px] leading-relaxed text-slate-500 md:text-[11px] dark:text-zinc-600">
                     {t.footerDisclaimer}
                   </p>
                 </motion.div>
@@ -504,11 +621,15 @@ export default function Page() {
           initial={{ y: 28, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={springIOS}
-          className="pointer-events-auto flex items-center gap-1 rounded-[22px] border border-white/[0.12] bg-black/52 p-1.5 shadow-[0_12px_48px_rgba(0,0,0,0.68)] ring-1 ring-white/[0.06] supports-[backdrop-filter]:bg-black/38"
-          style={{
-            WebkitBackdropFilter: "blur(28px) saturate(180%)",
-            backdropFilter: "blur(28px) saturate(180%)",
-          }}
+          className="pointer-events-auto flex items-center gap-1 rounded-[22px] border border-gray-200 bg-white p-1.5 shadow-lg ring-1 ring-gray-100 dark:border-white/[0.12] dark:bg-black/52 dark:shadow-[0_12px_48px_rgba(0,0,0,0.68)] dark:ring-white/[0.06] dark:supports-[backdrop-filter]:bg-black/38"
+          style={
+            theme === "dark"
+              ? {
+                  WebkitBackdropFilter: "blur(28px) saturate(180%)",
+                  backdropFilter: "blur(28px) saturate(180%)",
+                }
+              : undefined
+          }
         >
           <motion.button
             type="button"
@@ -518,7 +639,7 @@ export default function Page() {
               transition: springTap,
             }}
             onClick={() => searchInputRef.current?.focus()}
-            className="flex items-center gap-2 rounded-[14px] px-4 py-2.5 text-sm font-semibold leading-relaxed tracking-tight text-cyan-400"
+            className="flex items-center gap-2 rounded-[14px] px-4 py-2.5 text-sm font-semibold leading-relaxed tracking-tight text-cyan-700 dark:text-cyan-400"
           >
             <Search className="size-5 shrink-0" strokeWidth={2} aria-hidden />
             <AnimatePresence mode="wait">
@@ -551,7 +672,7 @@ export default function Page() {
                 onClick={() =>
                   window.scrollTo({ top: 0, behavior: "smooth" })
                 }
-                className="flex size-11 shrink-0 items-center justify-center rounded-[14px] text-cyan-400"
+                className="flex size-11 shrink-0 items-center justify-center rounded-[14px] text-cyan-700 dark:text-cyan-400"
                 aria-label={t.scrollTopAria}
               >
                 <ChevronUp className="size-5" strokeWidth={2} aria-hidden />

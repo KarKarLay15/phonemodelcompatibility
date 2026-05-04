@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Search, Smartphone, Info, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { compatibilityData } from "@/data/models";
+import { glassDescription, glassSearchText } from "@/data/compatibility-i18n";
 import {
   QUICK_BRAND_CHIPS,
   brandMatchesQuickFilter,
@@ -43,7 +44,7 @@ export default function CompatibilityApp() {
       (item) =>
         item.models.some((m) => m.toLowerCase().includes(q)) ||
         item.brand.toLowerCase().includes(q) ||
-        item.glassSize.toLowerCase().includes(q),
+        glassSearchText(item).toLowerCase().includes(q),
     );
   }, [query, quickBrand]);
 
@@ -162,7 +163,7 @@ export default function CompatibilityApp() {
                       </span>
                     </div>
                     <span className="rounded-full border border-white/[0.08] bg-black/30 px-3 py-1.5 text-[11px] font-medium leading-relaxed text-zinc-400">
-                      {mm.glassPrefix}: {item.glassSize}
+                      {mm.glassPrefix}: {glassDescription(item, "mm")}
                     </span>
                   </div>
 
