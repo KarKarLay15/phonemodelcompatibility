@@ -172,15 +172,12 @@ export default function Page() {
 
   return (
     <div
-      className={`${theme === "dark" ? "dark " : ""}min-h-dvh w-full bg-gray-50 pb-[max(7rem,var(--safe-bottom))] font-sans tracking-tight text-slate-900 selection:bg-cyan-600/25 md:pb-[max(2.75rem,var(--safe-bottom))] dark:bg-black dark:text-white dark:selection:bg-cyan-500/35`}
+      className={`${theme === "dark" ? "dark " : ""}min-h-dvh w-full bg-slate-50 pb-[max(7rem,var(--safe-bottom))] font-sans tracking-tight text-slate-900 selection:bg-cyan-600/25 md:pb-[max(2.75rem,var(--safe-bottom))] dark:bg-zinc-950 dark:text-white dark:selection:bg-cyan-500/35`}
     >
       <div
-        className="pointer-events-none fixed inset-0 -z-10 opacity-[0.18] dark:opacity-35"
+        className="pointer-events-none fixed inset-0 -z-10 bg-[linear-gradient(180deg,#f8fafc_0%,#eef2f7_42%,#f8fafc_100%)] dark:bg-[linear-gradient(180deg,#09090b_0%,#111827_44%,#09090b_100%)]"
         aria-hidden
-      >
-        <div className="absolute left-1/2 top-0 h-[380px] w-[min(100%,680px)] -translate-x-1/2 rounded-full bg-cyan-500/25 blur-[110px] dark:bg-cyan-600/18" />
-        <div className="absolute bottom-0 right-0 h-[260px] w-[260px] rounded-full bg-blue-500/15 blur-[95px] dark:bg-blue-700/12" />
-      </div>
+      />
 
       <header
         ref={headerRef}
@@ -190,8 +187,8 @@ export default function Page() {
             : "pt-[max(0.55rem,env(safe-area-inset-top,0px))]"
         } ${
           scrolled
-            ? "border-b border-gray-200 bg-white/95 shadow-sm supports-[backdrop-filter]:bg-white/90 dark:border-white/[0.08] dark:bg-black/58 dark:shadow-[0_12px_48px_rgba(0,0,0,0.55)] dark:supports-[backdrop-filter]:bg-black/42"
-            : "border-b border-transparent bg-white/85 supports-[backdrop-filter]:bg-white/80 dark:border-transparent dark:bg-black/35 dark:supports-[backdrop-filter]:bg-black/22"
+            ? "border-b border-slate-200 bg-white/95 shadow-sm supports-[backdrop-filter]:bg-white/92 dark:border-white/[0.08] dark:bg-zinc-950/78 dark:shadow-[0_12px_40px_rgba(0,0,0,0.42)] dark:supports-[backdrop-filter]:bg-zinc-950/62"
+            : "border-b border-slate-200/60 bg-white/92 supports-[backdrop-filter]:bg-white/88 dark:border-white/[0.06] dark:bg-zinc-950/60 dark:supports-[backdrop-filter]:bg-zinc-950/48"
         }`}
         style={
           theme === "dark"
@@ -202,7 +199,7 @@ export default function Page() {
             : { WebkitBackdropFilter: "none", backdropFilter: "none" }
         }
       >
-        <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-2 px-4 pb-3 pt-0.5 sm:gap-2.5 sm:pb-4 sm:pt-1 pe-[max(7.75rem,calc(env(safe-area-inset-right,0px)+6.75rem))] ps-[max(0.75rem,env(safe-area-inset-left,0px))]">
+        <div className="relative mx-auto flex max-w-4xl flex-col items-center gap-2 px-4 pb-3 pt-0.5 sm:gap-2.5 sm:pb-3 sm:pt-1 pe-[max(7.75rem,calc(env(safe-area-inset-right,0px)+6.75rem))] ps-[max(0.75rem,env(safe-area-inset-left,0px))]">
           <div className="absolute end-[max(0.35rem,env(safe-area-inset-right,0px))] top-[max(0.2rem,env(safe-area-inset-top,0px))] z-[60] flex flex-row-reverse items-center gap-1">
             <motion.button
               type="button"
@@ -311,7 +308,7 @@ export default function Page() {
                       <h1 className="text-balance text-base font-semibold leading-snug tracking-tight text-slate-900 sm:text-lg md:text-xl dark:text-white">
                         {t.title}
                       </h1>
-                      <p className="mt-0.5 max-w-md text-pretty text-[11px] leading-snug text-slate-600 sm:text-[12px] md:text-[13px] dark:text-zinc-500">
+                      <p className="mt-0.5 max-w-xl text-pretty text-[11px] leading-snug text-slate-600 sm:text-[12px] md:text-[13px] dark:text-zinc-400">
                         {t.subtitle}
                       </p>
                     </motion.div>
@@ -328,10 +325,10 @@ export default function Page() {
               scale:
                 trimmedQuery.length > 0 || quickBrand !== null ? 1.008 : 1,
             }}
-            className="group relative w-full max-w-lg origin-center"
+            className="group relative w-full max-w-2xl origin-center"
           >
             <div
-              className="relative rounded-full border-2 border-gray-200 bg-white p-[2px] shadow-sm transition-[border-color,box-shadow] group-focus-within:border-cyan-500/55 group-focus-within:shadow-md dark:border-white/[0.12] dark:bg-white/[0.06] dark:shadow-[0_8px_40px_rgba(0,0,0,0.35)] dark:group-focus-within:border-cyan-500/35 dark:group-focus-within:shadow-[0_12px_48px_rgba(34,211,238,0.12)]"
+              className="relative rounded-2xl border border-slate-200 bg-white p-1 shadow-sm transition-[border-color,box-shadow] group-focus-within:border-cyan-500/55 group-focus-within:shadow-md dark:border-white/[0.12] dark:bg-white/[0.06] dark:shadow-[0_8px_32px_rgba(0,0,0,0.28)] dark:group-focus-within:border-cyan-500/35 dark:group-focus-within:shadow-[0_12px_40px_rgba(34,211,238,0.1)]"
               style={
                 theme === "dark"
                   ? {
@@ -351,13 +348,13 @@ export default function Page() {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={t.searchPlaceholder}
                 autoComplete="off"
-                className="w-full rounded-full border border-gray-200 bg-gray-100 py-2.5 pl-11 pr-4 text-[14px] leading-snug tracking-tight text-slate-900 shadow-inner shadow-slate-900/5 transition-[border-color,background-color] placeholder:text-slate-500 focus:border-cyan-500/60 focus:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 md:py-3 md:pl-14 md:pr-5 md:text-[15px] dark:border-white/[0.06] dark:bg-black/25 dark:text-white dark:shadow-inner dark:shadow-black/25 dark:placeholder:text-zinc-600 dark:focus:border-cyan-500/40 dark:focus:bg-black/35 dark:focus:ring-cyan-500/25"
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-11 pr-4 text-[14px] leading-snug tracking-tight text-slate-950 shadow-inner shadow-slate-900/5 transition-[border-color,background-color] placeholder:text-slate-500 focus:border-cyan-500/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500/25 md:py-3 md:pl-14 md:pr-5 md:text-[15px] dark:border-white/[0.06] dark:bg-black/25 dark:text-white dark:shadow-inner dark:shadow-black/25 dark:placeholder:text-zinc-500 dark:focus:border-cyan-500/40 dark:focus:bg-black/35 dark:focus:ring-cyan-500/25"
                 aria-label={t.searchAria}
               />
             </div>
           </motion.div>
 
-          <div className="w-full max-w-lg space-y-1.5">
+          <div className="w-full max-w-2xl space-y-1.5">
             <AnimatePresence initial={false} mode="popLayout">
               {!isSearching ? (
                 <motion.div
@@ -388,10 +385,10 @@ export default function Page() {
                       chipHaptic();
                       setQuickBrand((prev) => (prev === key ? null : key));
                     }}
-                    className={`rounded-full border px-2.5 py-1 text-[11px] font-semibold tracking-tight transition-colors sm:px-3 sm:py-1.5 sm:text-xs ${
+                    className={`rounded-full border px-3 py-1.5 text-[11px] font-semibold tracking-tight transition-colors sm:px-3.5 sm:py-1.5 sm:text-xs ${
                       active
                         ? "border-cyan-600 bg-cyan-100 text-cyan-900 shadow-sm dark:border-cyan-500/55 dark:bg-cyan-500/15 dark:text-cyan-300 dark:shadow-[0_0_20px_rgba(34,211,238,0.15)]"
-                        : "border-gray-200 bg-white text-slate-600 shadow-sm hover:border-cyan-400/40 hover:text-slate-900 dark:border-white/[0.1] dark:bg-black/30 dark:text-zinc-400 dark:shadow-none dark:hover:border-cyan-500/25 dark:hover:text-zinc-200"
+                        : "border-slate-200 bg-white text-slate-700 shadow-sm hover:border-cyan-400/40 hover:bg-slate-50 hover:text-slate-950 dark:border-white/[0.1] dark:bg-black/30 dark:text-zinc-300 dark:shadow-none dark:hover:border-cyan-500/25 dark:hover:text-zinc-100"
                     }`}
                     style={
                       theme === "dark"
@@ -412,7 +409,7 @@ export default function Page() {
       </header>
 
       <main
-        className="relative mx-auto max-w-2xl px-4 pb-[env(safe-area-inset-bottom,0px)]"
+        className="relative mx-auto max-w-4xl px-4 pb-[env(safe-area-inset-bottom,0px)]"
         style={{ paddingTop: mainPaddingTop }}
         onTouchStart={(e) => {
           if (typeof window === "undefined") return;
@@ -471,7 +468,7 @@ export default function Page() {
                     ...springIOS,
                     delay: idx * 0.032,
                   }}
-                  className="relative overflow-hidden rounded-[28px] border border-gray-200 bg-white p-4 shadow-sm md:rounded-[30px] md:p-5 dark:border-white/[0.1] dark:bg-white/[0.045] dark:shadow-[0_28px_72px_rgba(0,0,0,0.52)]"
+                  className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/95 p-4 shadow-[0_14px_36px_rgba(15,23,42,0.07)] md:p-5 dark:border-white/[0.1] dark:bg-white/[0.055] dark:shadow-[0_22px_56px_rgba(0,0,0,0.42)]"
                   style={
                     theme === "dark"
                       ? {
@@ -483,14 +480,14 @@ export default function Page() {
                 >
                   <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/35 to-transparent opacity-70 dark:via-cyan-400/28 dark:opacity-50" aria-hidden />
 
-                  <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
+                  <div className="mb-3 flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
                     <div className="flex items-center gap-2.5">
                       <span className="size-2 shrink-0 rounded-full bg-cyan-600 shadow-[0_0_10px_rgba(8,145,178,0.45)] dark:bg-cyan-400 dark:shadow-[0_0_12px_rgba(34,211,238,0.55)]" />
-                      <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-cyan-800 dark:text-cyan-300/95">
+                      <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-800 dark:text-cyan-300/95">
                         {item.brand}
                       </span>
                     </div>
-                    <span className="rounded-full border border-gray-200 bg-gray-50 px-2 py-1 text-[10px] font-medium leading-snug text-slate-600 md:px-2.5 md:text-[11px] dark:border-white/[0.08] dark:bg-black/30 dark:text-zinc-400">
+                    <span className="max-w-full rounded-xl border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-[10px] font-medium leading-snug text-slate-700 md:max-w-[34rem] md:text-[11px] dark:border-white/[0.08] dark:bg-black/30 dark:text-zinc-300">
                       {t.glassPrefix} · {glassDescription(item, lang)}
                     </span>
                   </div>
@@ -498,7 +495,7 @@ export default function Page() {
                   <h2 className="sr-only">
                     {item.brand} · {t.srModelsFor}
                   </h2>
-                  <ul className="flex flex-wrap gap-1.5 md:gap-2">
+                  <ul className="flex flex-wrap gap-2">
                     {item.models.map((model) => (
                       <li key={model}>
                         <motion.button
@@ -509,7 +506,7 @@ export default function Page() {
                             transition: springTap,
                           }}
                           onClick={() => chipHaptic()}
-                          className="flex max-w-full items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 px-2 py-1.5 text-left text-[11px] font-medium leading-snug text-slate-800 transition-[border-color,background-color] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-600/35 active:bg-gray-100 sm:gap-2 sm:rounded-[18px] sm:px-2.5 sm:text-xs md:px-3 md:py-2 md:text-[13px] dark:border-white/[0.07] dark:bg-black/35 dark:text-zinc-200 dark:focus-visible:ring-cyan-500/40 dark:active:bg-black/50"
+                          className="flex max-w-full items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-left text-xs font-semibold leading-snug text-slate-800 transition-[border-color,background-color,box-shadow] hover:border-cyan-300 hover:bg-white hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-600/35 active:bg-slate-100 sm:gap-2 md:px-3.5 md:py-2 md:text-[13px] dark:border-white/[0.08] dark:bg-black/35 dark:text-zinc-100 dark:hover:border-cyan-500/30 dark:hover:bg-black/45 dark:focus-visible:ring-cyan-500/40 dark:active:bg-black/50"
                         >
                           <Smartphone
                             className="size-3 shrink-0 text-cyan-600 sm:size-3.5 dark:text-cyan-500"
