@@ -69,6 +69,7 @@ export const mm = {
   footerDisclaimer:
     "မှန်အပေါက်ပုံစံနှင့် ထုတ်လုပ်သူ ပြင်ဆင်မှုများ ကွဲပြားနိုင်ပါသည်။ တပ်ဆင်မမီ စမ်းသပ်အတည်ပြုပါ။",
   quickBrandsTitle: "လူသုံးအများဆုံး Brand များ",
+  allModels: "All Model",
   fabSearch: "ရှာရန်",
   scrollTopAria: "စာမျက်နှာထိပ် ပြန်သွားရန်",
   srModelsFor: "တူညီမော်ဒယ်များ",
@@ -99,6 +100,7 @@ export const en = {
   footerDisclaimer:
     "Cutouts and OEM revisions vary — always confirm with a physical fit check before installation.",
   quickBrandsTitle: "Popular brands",
+  allModels: "All Model",
   fabSearch: "Search",
   scrollTopAria: "Scroll to top",
   srModelsFor: "Compatible models",

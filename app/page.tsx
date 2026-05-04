@@ -88,7 +88,7 @@ export default function Page() {
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const [mainPaddingTop, setMainPaddingTop] = useState(176);
+  const [mainPaddingTop, setMainPaddingTop] = useState(128);
   const listSpringControls = useAnimationControls();
   const skipQueryListSpringRef = useRef(true);
   const pullTouchStartY = useRef<number | null>(null);
@@ -280,7 +280,7 @@ export default function Page() {
           >
             <div className="min-h-0 overflow-hidden">
               <motion.div
-                className="flex w-full flex-col items-center gap-1 pb-1 pt-2 sm:flex-row sm:justify-center sm:gap-2.5 sm:pb-0 sm:pt-1 md:pt-0"
+                className="flex w-full flex-row items-center justify-center gap-2 pb-0 pt-1 sm:gap-2.5 md:pt-0"
                 initial={false}
                 animate={{
                   scale: scrolled && !isSearching ? 0.97 : 1,
@@ -288,14 +288,14 @@ export default function Page() {
                 }}
                 transition={{ type: "spring", stiffness: 380, damping: 32 }}
               >
-                <div className="flex size-10 max-h-12 max-w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 shadow-[0_0_20px_rgba(8,145,178,0.35)] ring-1 ring-cyan-700/15 dark:shadow-[0_0_24px_rgba(34,211,238,0.18)] dark:ring-white/10 sm:size-11">
+                <div className="flex size-8 max-h-10 max-w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 shadow-[0_0_16px_rgba(8,145,178,0.28)] ring-1 ring-cyan-700/15 dark:shadow-[0_0_20px_rgba(34,211,238,0.16)] dark:ring-white/10 sm:size-9">
                   <Smartphone
-                    className="size-[22px] text-white sm:size-6"
+                    className="size-5 text-white sm:size-[22px]"
                     strokeWidth={1.75}
                     aria-hidden
                   />
                 </div>
-                <div className="text-center sm:min-h-0 sm:text-left">
+                <div className="min-w-0 text-left">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={lang}
@@ -303,12 +303,12 @@ export default function Page() {
                       animate={langFade.animate}
                       exit={langFade.exit}
                       transition={langFade.transition}
-                      className="text-center sm:text-left"
+                      className="text-left"
                     >
-                      <h1 className="text-balance text-base font-semibold leading-snug tracking-tight text-slate-900 sm:text-lg md:text-xl dark:text-white">
+                      <h1 className="truncate text-base font-semibold leading-tight tracking-tight text-slate-900 sm:text-lg dark:text-white">
                         {t.title}
                       </h1>
-                      <p className="mt-0.5 max-w-xl text-pretty text-[11px] leading-snug text-slate-600 sm:text-[12px] md:text-[13px] dark:text-zinc-400">
+                      <p className="mt-0.5 line-clamp-1 max-w-xl text-[11px] leading-snug text-slate-600 sm:text-[12px] dark:text-zinc-400">
                         {t.subtitle}
                       </p>
                     </motion.div>
@@ -328,7 +328,7 @@ export default function Page() {
             className="group relative w-full max-w-2xl origin-center"
           >
             <div
-              className="relative rounded-2xl border border-slate-200 bg-white p-1 shadow-sm transition-[border-color,box-shadow] group-focus-within:border-cyan-500/55 group-focus-within:shadow-md dark:border-white/[0.12] dark:bg-white/[0.06] dark:shadow-[0_8px_32px_rgba(0,0,0,0.28)] dark:group-focus-within:border-cyan-500/35 dark:group-focus-within:shadow-[0_12px_40px_rgba(34,211,238,0.1)]"
+              className="relative rounded-2xl border border-slate-200 bg-white p-0.5 shadow-sm transition-[border-color,box-shadow] group-focus-within:border-cyan-500/55 group-focus-within:shadow-md dark:border-white/[0.12] dark:bg-white/[0.06] dark:shadow-[0_8px_32px_rgba(0,0,0,0.28)] dark:group-focus-within:border-cyan-500/35 dark:group-focus-within:shadow-[0_12px_40px_rgba(34,211,238,0.1)]"
               style={
                 theme === "dark"
                   ? {
@@ -348,13 +348,13 @@ export default function Page() {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={t.searchPlaceholder}
                 autoComplete="off"
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-11 pr-4 text-[14px] leading-snug tracking-tight text-slate-950 shadow-inner shadow-slate-900/5 transition-[border-color,background-color] placeholder:text-slate-500 focus:border-cyan-500/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500/25 md:py-3 md:pl-14 md:pr-5 md:text-[15px] dark:border-white/[0.06] dark:bg-black/25 dark:text-white dark:shadow-inner dark:shadow-black/25 dark:placeholder:text-zinc-500 dark:focus:border-cyan-500/40 dark:focus:bg-black/35 dark:focus:ring-cyan-500/25"
+                className="w-full rounded-[14px] border border-slate-200 bg-slate-50 py-2 pl-11 pr-4 text-[14px] leading-snug tracking-tight text-slate-950 shadow-inner shadow-slate-900/5 transition-[border-color,background-color] placeholder:text-slate-500 focus:border-cyan-500/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500/25 md:py-2.5 md:pl-14 md:pr-5 md:text-[15px] dark:border-white/[0.06] dark:bg-black/25 dark:text-white dark:shadow-inner dark:shadow-black/25 dark:placeholder:text-zinc-500 dark:focus:border-cyan-500/40 dark:focus:bg-black/35 dark:focus:ring-cyan-500/25"
                 aria-label={t.searchAria}
               />
             </div>
           </motion.div>
 
-          <div className="w-full max-w-2xl space-y-1.5">
+          <div className="w-full max-w-3xl space-y-1">
             <AnimatePresence initial={false} mode="popLayout">
               {!isSearching ? (
                 <motion.div
@@ -366,13 +366,37 @@ export default function Page() {
                   transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
                   className="overflow-hidden"
                 >
-                  <p className="text-center text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500 dark:text-zinc-500">
+                  <p className="text-center text-[9px] font-medium uppercase tracking-[0.12em] text-slate-500 dark:text-zinc-500">
                     {t.quickBrandsTitle}
                   </p>
                 </motion.div>
               ) : null}
             </AnimatePresence>
-            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
+            <div className="no-scrollbar flex flex-nowrap gap-1.5 overflow-x-auto px-1 pb-1 sm:justify-center sm:gap-2">
+              <motion.button
+                type="button"
+                layout
+                whileTap={{ scale: 0.95, transition: springTap }}
+                onClick={() => {
+                  chipHaptic();
+                  setQuickBrand(null);
+                }}
+                className={`shrink-0 rounded-full border px-3 py-1.5 text-[11px] font-semibold tracking-tight transition-colors sm:px-3.5 sm:text-xs ${
+                  quickBrand === null
+                    ? "border-cyan-600 bg-cyan-100 text-cyan-900 shadow-sm dark:border-cyan-500/55 dark:bg-cyan-500/15 dark:text-cyan-300 dark:shadow-[0_0_20px_rgba(34,211,238,0.15)]"
+                    : "border-slate-200 bg-white text-slate-700 shadow-sm hover:border-cyan-400/40 hover:bg-slate-50 hover:text-slate-950 dark:border-white/[0.1] dark:bg-black/30 dark:text-zinc-300 dark:shadow-none dark:hover:border-cyan-500/25 dark:hover:text-zinc-100"
+                }`}
+                style={
+                  theme === "dark"
+                    ? {
+                        WebkitBackdropFilter: "blur(16px)",
+                        backdropFilter: "blur(16px)",
+                      }
+                    : undefined
+                }
+              >
+                {t.allModels}
+              </motion.button>
               {QUICK_BRAND_CHIPS.map(({ key, label }) => {
                 const active = quickBrand === key;
                 return (
@@ -385,7 +409,7 @@ export default function Page() {
                       chipHaptic();
                       setQuickBrand((prev) => (prev === key ? null : key));
                     }}
-                    className={`rounded-full border px-3 py-1.5 text-[11px] font-semibold tracking-tight transition-colors sm:px-3.5 sm:py-1.5 sm:text-xs ${
+                    className={`shrink-0 rounded-full border px-3 py-1.5 text-[11px] font-semibold tracking-tight transition-colors sm:px-3.5 sm:text-xs ${
                       active
                         ? "border-cyan-600 bg-cyan-100 text-cyan-900 shadow-sm dark:border-cyan-500/55 dark:bg-cyan-500/15 dark:text-cyan-300 dark:shadow-[0_0_20px_rgba(34,211,238,0.15)]"
                         : "border-slate-200 bg-white text-slate-700 shadow-sm hover:border-cyan-400/40 hover:bg-slate-50 hover:text-slate-950 dark:border-white/[0.1] dark:bg-black/30 dark:text-zinc-300 dark:shadow-none dark:hover:border-cyan-500/25 dark:hover:text-zinc-100"
